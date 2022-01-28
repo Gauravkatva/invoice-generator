@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdf/home_page.dart';
+import 'package:flutter_pdf/screens/home_page.dart';
 import 'package:flutter_pdf/provider/supplier_info_provider.dart';
-import 'package:flutter_pdf/supplier_info.dart';
+import 'package:flutter_pdf/screens/supplier_info.dart';
 import 'package:provider/provider.dart';
 
 enum AppState { splash, supplierInfo, home }

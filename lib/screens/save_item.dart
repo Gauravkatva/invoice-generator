@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdf/add_item.dart';
-import 'package:flutter_pdf/home_page.dart';
+import 'package:flutter_pdf/screens/add_item.dart';
+import 'package:flutter_pdf/screens/home_page.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
 import 'package:flutter_pdf/provider/database_provider.dart';
 import 'package:provider/provider.dart';

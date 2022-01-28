@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
 import 'package:flutter_pdf/provider/database_provider.dart';
-import 'package:flutter_pdf/provider/supplier_info_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddItem extends StatefulWidget {

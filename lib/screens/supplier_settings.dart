@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_pdf/pdf_invoice.dart';
-import 'package:flutter_pdf/splash_screen.dart';
-import 'package:flutter_pdf/supplier_info.dart';
+import 'package:flutter_pdf/utils/pdf_invoice.dart';
+import 'package:flutter_pdf/screens/splash_screen.dart';
+import 'package:flutter_pdf/screens/supplier_info.dart';
 
 class SupplierSettings extends StatefulWidget {
   const SupplierSettings({Key? key, required this.initialSupplierInfo})

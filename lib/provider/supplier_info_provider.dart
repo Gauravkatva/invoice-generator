@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdf/pdf_invoice.dart';
-import 'package:flutter_pdf/supplier_info.dart';
+import 'package:flutter_pdf/utils/pdf_invoice.dart';
+import 'package:flutter_pdf/screens/supplier_info.dart';
 
 class SupplierInfoProvider with ChangeNotifier {
   Supplier supplierInfo = Supplier();

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pdf/add_item.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
-import 'package:flutter_pdf/pdf_invoice.dart';
+import 'package:flutter_pdf/utils/pdf_invoice.dart';
 import 'package:flutter_pdf/provider/bill_items_provider.dart';
 import 'package:flutter_pdf/provider/supplier_info_provider.dart';
-import 'package:flutter_pdf/save_item.dart';
-import 'package:flutter_pdf/supplier_settings.dart';
+import 'package:flutter_pdf/screens/save_item.dart';
+import 'package:flutter_pdf/screens/supplier_settings.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {

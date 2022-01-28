@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_pdf/keys.dart';
+import 'package:flutter_pdf/utils/keys.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
 
 import 'package:hive/hive.dart';

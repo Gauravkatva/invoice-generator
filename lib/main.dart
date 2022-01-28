@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_pdf/keys.dart';
+import 'package:flutter_pdf/utils/keys.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
 import 'package:flutter_pdf/provider/bill_items_provider.dart';
 import 'package:flutter_pdf/provider/database_provider.dart';
 import 'package:flutter_pdf/provider/supplier_info_provider.dart';
-import 'package:flutter_pdf/splash_screen.dart';
+import 'package:flutter_pdf/screens/splash_screen.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
