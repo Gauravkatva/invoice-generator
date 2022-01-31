@@ -106,12 +106,16 @@ class PdfInvoiceApi {
 
   static Widget buildTotal(Invoice invoice) {
     double netTotal = 0;
-    double gst = invoice.items!.first.gst!;
+    double taxAmount = 0;
+    double total = 0;
     for (var item in invoice.items!) {
-      netTotal += (item.quantity! * item.unitPrice!);
+      double localTotal = item.unitPrice! * item.quantity!;
+      double localTaxAmount = localTotal * item.gst!;
+      taxAmount += localTaxAmount;
+      netTotal += localTotal;
     }
-    final gstAmount = netTotal * gst;
-    final total = gstAmount + netTotal;
+    total += (netTotal + taxAmount);
+
     return Container(
       alignment: Alignment.centerRight,
       child: Row(
@@ -130,8 +134,8 @@ class PdfInvoiceApi {
                   unite: true,
                 ),
                 buildText(
-                  title: 'GST ${gst * 100} %',
-                  value: gstAmount.toStringAsFixed(2),
+                  title: 'GST Amount',
+                  value: taxAmount.toStringAsFixed(2),
                   unite: true,
                 ),
                 Divider(),
@@ -193,7 +197,8 @@ class PdfInvoiceApi {
 
   static Widget buildInvoice(Invoice invoice) {
     final headers = [
-      'Item Description',
+      'Item',
+      'Description',
       'Qty',
       'Rate',
       'GST',
@@ -202,9 +207,10 @@ class PdfInvoiceApi {
     final data = invoice.items?.map((item) {
       final total = item.unitPrice! * item.quantity! * (1 + item.gst!);
       return [
+        item.title,
         item.description,
         item.quantity,
-        '\$ ${item.unitPrice?.toStringAsFixed(2)}',
+        '${item.unitPrice?.toStringAsFixed(2)}',
         '${item.gst! * 100} %',
         total.toStringAsFixed(2),
       ];
@@ -220,18 +226,16 @@ class PdfInvoiceApi {
       cellHeight: 30,
       cellAlignments: {
         0: Alignment.centerLeft,
-        1: Alignment.centerRight,
+        1: Alignment.centerLeft,
         2: Alignment.centerRight,
         3: Alignment.centerRight,
         4: Alignment.centerRight,
+        5: Alignment.centerRight,
       },
     );
   }
 
   static Widget buildSupplierHeader(Invoice invoice) {
-    // final image = MemoryImage(
-    //   File('assets/images/logo.png').readAsBytesSync(),
-    // );
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

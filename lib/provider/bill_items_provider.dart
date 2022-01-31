@@ -13,6 +13,12 @@ class BillItemsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateItem(int index, InvoiceItem newItem) {
+    items.removeAt(index);
+    items.insert(index, newItem);
+    notifyListeners();
+  }
+
   void clearItems() {
     items.clear();
     notifyListeners();

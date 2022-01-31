@@ -72,7 +72,7 @@ class _AddItemState extends State<AddItem> {
   void initState() {
     if (widget.invoiceItem != null) {
       titleController.text = widget.invoiceItem!.title!;
-      gstController.text = widget.invoiceItem!.gst.toString();
+      gstController.text = (widget.invoiceItem!.gst! * 100).toString();
       unitPriceController.text = widget.invoiceItem!.unitPrice.toString();
     }
     super.initState();

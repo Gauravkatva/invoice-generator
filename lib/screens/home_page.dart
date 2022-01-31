@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pdf/models/invoice_item.dart';
+import 'package:flutter_pdf/screens/add_item_to_bill.dart';
+import 'package:flutter_pdf/screens/select_product.dart';
 import 'package:flutter_pdf/utils/pdf_invoice.dart';
 import 'package:flutter_pdf/provider/bill_items_provider.dart';
 import 'package:flutter_pdf/provider/supplier_info_provider.dart';
@@ -8,8 +10,9 @@ import 'package:flutter_pdf/screens/supplier_settings.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -45,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final billItemsProvider = Provider.of<BillItemsProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Invoice Generator'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_shopping_cart_sharp),
@@ -107,7 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const SelectProduct(),
+                          ),
+                        );
+                      },
                       child: const Text(
                         'Add Item',
                       ),
@@ -137,6 +146,20 @@ class _MyHomePageState extends State<MyHomePage> {
                             billItemsProvider.items[index];
                         return ItemCard(
                           invoiceItem: invoiceItem,
+                          shouldPadding: false,
+                          showDescription: true,
+                          onEdit: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return AddItemToBill(
+                                    index: index,
+                                    invoiceItem: invoiceItem,
+                                  );
+                                },
+                              ),
+                            );
+                          },
                           onRemove: () {
                             billItemsProvider.removeItem(index);
                           },
@@ -192,55 +215,87 @@ class ItemCard extends StatelessWidget {
   final InvoiceItem invoiceItem;
   final void Function()? onRemove;
   final void Function()? onEdit;
-  const ItemCard(
-      {Key? key, required this.invoiceItem, this.onRemove, this.onEdit})
-      : super(key: key);
+  final void Function()? onTap;
+  final bool showDescription;
+  final bool shouldPadding;
+  const ItemCard({
+    Key? key,
+    this.showDescription = false,
+    this.shouldPadding = true,
+    required this.invoiceItem,
+    this.onRemove,
+    this.onEdit,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(context) {
     final style = Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 14);
+    final padding = shouldPadding
+        ? const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5)
+        : const EdgeInsets.symmetric(horizontal: 0, vertical: 2.5);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2.5),
+      padding: padding,
       child: Card(
-        child: Container(
-          margin: const EdgeInsets.only(
-            left: 10,
-            top: 10,
-            bottom: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Title: ${invoiceItem.title}',
-                    style: style,
-                  ),
-                  Text(
-                    'Price: ${invoiceItem.unitPrice}',
-                    style: style,
-                  ),
-                  Text(
-                    'GST: ${invoiceItem.gst! * 100} %',
-                    style: style,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: onEdit,
-                    icon: const Icon(Icons.edit),
-                  ),
-                  IconButton(
-                    onPressed: onRemove,
-                    icon: const Icon(Icons.delete),
-                  ),
-                ],
-              )
-            ],
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            margin: const EdgeInsets.only(
+              left: 10,
+              top: 10,
+              bottom: 10,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Title: ${invoiceItem.title}',
+                      style: style,
+                    ),
+                    Text(
+                      'Price: ${invoiceItem.unitPrice}',
+                      style: style,
+                    ),
+                    Text(
+                      'GST: ${invoiceItem.gst! * 100} %',
+                      style: style,
+                    ),
+                    showDescription
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Quantity: ${invoiceItem.quantity!}',
+                                style: style,
+                              ),
+                              Text(
+                                'Description: ${invoiceItem.description!.isEmpty ? 'NA' : invoiceItem.description}',
+                                style: style,
+                              ),
+                            ],
+                          )
+                        : Container(),
+                  ],
+                ),
+                onTap == null
+                    ? Row(
+                        children: [
+                          IconButton(
+                            onPressed: onEdit,
+                            icon: const Icon(Icons.edit),
+                          ),
+                          IconButton(
+                            onPressed: onRemove,
+                            icon: const Icon(Icons.delete),
+                          ),
+                        ],
+                      )
+                    : Container(),
+              ],
+            ),
           ),
         ),
       ),

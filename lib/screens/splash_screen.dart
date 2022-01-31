@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget buildForState(AppState state) {
     switch (state) {
       case AppState.home:
-        return const MyHomePage(title: 'Invoice Generator');
+        return const MyHomePage();
       case AppState.supplierInfo:
         return const SupplierInfo();
       default:
